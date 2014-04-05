@@ -92,6 +92,7 @@ app.post('/upload_avatar', function(req, res) {
 			'x-amz-acl': 'public-read'
 		};
 		headers['Content-Length'] = files.upload[0].size;
+		console.log(file.path);
 		s3Client.putFile(file.path, '/images/original/'+ filename + '.' +type, function(err, s3Response) {
 			if (err) throw err;
 		});
