@@ -11,7 +11,8 @@ var path = require('path');
 var knox = require('knox');
 var multiparty = require('multiparty');
 var crypto = require('crypto');
-var gm = require('gm');
+var graphicsmagick = require('gm');
+var gm = graphicsmagick.subClass({ imageMagick: true });
 var jwt = require('jwt-simple');
 
 var app = express();
