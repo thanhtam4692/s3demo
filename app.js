@@ -95,6 +95,7 @@ app.post('/upload_avatar', function(req, res) {
 		s3Client.putFile(file.path, '/images/original/'+ filename + '.' +type, function(err, s3Response) {
 			if (err) throw err;
 		});
+		res.end('Done');
 		//Resize
 //		var img = gm(file.path);
 //		img.resize(666);
