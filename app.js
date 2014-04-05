@@ -100,9 +100,9 @@ app.post('/upload_avatar', function(req, res) {
 		//Resize
 		var img = gm(file.path);
 		img.resize(666);
-		img.write('/tmp/'+ filename + '.' +type, function (err) {
-			if (err) console.log('err');
-			s3Client.putFile('/tmp/'+ filename + '.' +type, '/images/medium/'+ filename + '.' +type, headers, function(err, s3Response) {
+		img.write('./tmp/'+ filename + '.' +type, function (err) {
+			if (err) console.log(err);
+			s3Client.putFile('./tmp/'+ filename + '.' +type, '/images/medium/'+ filename + '.' +type, headers, function(err, s3Response) {
 				if (err) throw err;
 				s3Response.pipe(res);
 			});
