@@ -92,16 +92,14 @@ app.post('/upload_avatar', function(req, res) {
 			'x-amz-acl': 'public-read'
 		};
 		headers['Content-Length'] = files.upload[0].size;
-		console.log(file.path);
 		s3Client.putFile(file.path, '/images/original/'+ filename + '.' +type, function(err, s3Response) {
 			if (err) throw err;
 		});
-		res.end('Done');
 		//Resize
 		var img = gm(file.path);
 		img.resize(666);
 		img.write('./tmp/'+ filename + '.' +type, function (err) {
-			if (err) console.log(err);
+			if (err) console.log("error ", err);
 			s3Client.putFile('./tmp/'+ filename + '.' +type, '/images/medium/'+ filename + '.' +type, headers, function(err, s3Response) {
 				if (err) throw err;
 				s3Response.pipe(res);
