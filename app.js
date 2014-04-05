@@ -98,18 +98,15 @@ app.post('/upload_avatar', function(req, res) {
 		});
 		res.end('Done');
 		//Resize
-//		var img = gm(file.path);
-//		img.resize(666);
-//		img.stream(function (err, stdout, stderr) {
-//			img.filesize({ bufferStream: true },function(err, value){
-//				headers['Content-Length'] = value;
-//				console.log(headers['Content-Length']);
-//				s3Client.putStream(stdout, '/images/medium/'+ filename + '.' +type, headers, function(err, s3Response) {
-//					if (err) throw err;
-//					s3Response.pipe(res);
-//				});
-//			});
-//		});
+		var img = gm(file.path);
+		img.resize(666);
+		img.write('/tmp/'+ filename + '.' +type, function (err) {
+			if (err) console.log('err');
+			s3Client.putFile('/tmp/'+ filename + '.' +type, '/images/medium/'+ filename + '.' +type, headers, function(err, s3Response) {
+				if (err) throw err;
+				s3Response.pipe(res);
+			});
+		});
 	});
 });
 
